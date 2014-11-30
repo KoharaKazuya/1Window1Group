@@ -6,9 +6,8 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     chrome.windows.get(request.windowId, {
       "populate": true
     }, function(win) {
-      registerGroupFromWindow("test", win);
+      registerGroupFromWindow(request.name, win);
     });
-    sendResponse({});
   } else if (request.command === "get-group-names") {
     var names = [];
     for (var name in groups) if (groups.hasOwnProperty(name)) {
@@ -72,6 +71,12 @@ function updateGroups() {
  */
 function registerGroupFromWindow(name, win) {
   var group = {};
+
+  // remove old group
+  var old = getGroupFromWindowId(win.id);
+  if (old !== undefined) {
+    delete groups[old];
+  }
 
   // window information
   var info = {};

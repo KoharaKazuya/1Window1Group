@@ -2,12 +2,27 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
   var buttonToRegisterGroup = document.querySelector('.register-group');
   buttonToRegisterGroup.addEventListener('click', function(event) {
-    chrome.windows.getCurrent(function(win) {
-      chrome.runtime.sendMessage({
-        "command": "register-group",
-        "windowId": win.id
+    var input = buttonToRegisterGroup.querySelector('input');
+    var name = input.value;
+    if (name !== undefined && name !== "") {
+      chrome.windows.getCurrent(function(win) {
+        chrome.runtime.sendMessage({
+          "command": "register-group",
+          "name": name,
+          "windowId": win.id
+        });
       });
-    });
+      window.close();
+    } else {
+      input.focus();
+    }
+  });
+
+  var groupNameInput = buttonToRegisterGroup.querySelector('input');
+  groupNameInput.addEventListener('keypress', function(event) {
+    if (event.keyCode === 13) {
+      buttonToRegisterGroup.click();
+    }
   });
 
   var list = document.querySelector('.group-list');

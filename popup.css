@@ -4,6 +4,48 @@ body {
   background-color: #effeff;
 }
 
+.buttons {
+  height: 32px;
+  overflow: hidden;
+}
+
+button {
+  border-style: none;
+  cursor: pointer;
+  background-color: #eee;
+  transition: background-color 0.2s linear;
+  width: 32px;
+  height: 32px;
+  padding: 4px;
+  white-space: nowrap;
+}
+
+button:hover {
+  background-color: white;
+  width: auto;
+}
+
+button .fa {
+  font-size: 24px;
+  vertical-align: middle;
+}
+
+button label {
+  display: inline-block;
+  cursor: pointer;
+  height: 24px;
+  line-height: 24px;
+  margin: 0 1em;
+}
+
+button label input {
+  width: 5em;
+}
+
+*:focus {
+  outline: none;
+}
+
 .group-list .group {
   min-height: 64px;
   cursor: pointer;
