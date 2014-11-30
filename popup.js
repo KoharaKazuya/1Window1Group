@@ -25,6 +25,17 @@ document.addEventListener("DOMContentLoaded", function(event) {
     }
   });
 
+  var buttonToCloseGroup = document.querySelector('.close-group');
+  buttonToCloseGroup.addEventListener('click', function(event) {
+    chrome.windows.getCurrent(function(win) {
+      chrome.runtime.sendMessage({
+        "command": "close-group",
+        "windowId": win.id
+      });
+      window.close();
+    });
+  });
+
   var list = document.querySelector('.group-list');
   chrome.runtime.sendMessage({
     "command": "get-group-names"

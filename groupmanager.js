@@ -27,6 +27,11 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     } else {
       sendResponse({ "favicons": [] });
     }
+  } else if (request.command === "close-group") {
+    var name = getGroupFromWindowId(request.windowId);
+    if (name !== undefined) {
+      delete groups[name];
+    }
   }
 });
 
