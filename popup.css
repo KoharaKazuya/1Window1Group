@@ -1,0 +1,28 @@
+body {
+  width: 320px;
+  height: 480px;
+  background-color: #effeff;
+}
+
+.group-list .group {
+  min-height: 64px;
+  cursor: pointer;
+  background-color: #eee;
+  transition: background-color 0.2s linear;
+  margin-top: 1em;
+  padding: 1em;
+}
+
+.group-list .group:hover {
+  background-color: white;
+}
+
+.group-list .group h2 {
+  margin: 0 0 0.5em 0;
+}
+
+.group-list .group .favicon {
+  width: 32px;
+  height: 32px;
+  margin: 4px;
+}

@@ -17,6 +17,17 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     sendResponse({ "names": names });
   } else if (request.command === "open-group") {
     openGroup(request.group);
+  } else if (request.command === "get-favicons") {
+    if (request.group in groups) {
+      var favicons = [];
+      var tabs = groups[request.group].tabs;
+      for (var i=0; i<tabs.length; ++i) {
+        favicons.push(tabs[i].favicon);
+      }
+      sendResponse({ "favicons": favicons });
+    } else {
+      sendResponse({ "favicons": [] });
+    }
   }
 });
 
@@ -79,6 +90,7 @@ function registerGroupFromWindow(name, win) {
     tab.url = tabs[i].url;
     tab.active = tabs[i].active;
     tab.pinned = tabs[i].pinned;
+    tab.favicon = tabs[i].favIconUrl;
     list.push(tab);
   }
   group.tabs = list;
