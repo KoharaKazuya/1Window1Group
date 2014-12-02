@@ -1,5 +1,11 @@
+chrome.storage.local.get( {"groups": {} }, function(result) {
+
 // { String groupName => Object group }
-var groups = {};
+var groups = result.groups;
+
+Object.observe(groups, function(changes) {
+  chrome.storage.local.set({ "groups": groups });
+});
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   if (request.command === "register-group") {
@@ -169,3 +175,5 @@ function generateGroupWindow(group) {
     });
   });
 }
+
+});
