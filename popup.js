@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
   chrome.runtime.sendMessage({
     "command": "get-group-names"
   }, function(response) {
-    response.names.forEach(function(name) {
+    response.names.sort().forEach(function(name) {
 
       var a = document.createElement("div");
       a.className = "group"
