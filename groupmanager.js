@@ -58,6 +58,7 @@ chrome.tabs.onReplaced.addListener(updateGroups);
 chrome.tabs.onRemoved.addListener(function(tabId, info) {
   if (!info.isWindowClosing) {
     updateGroups();
+    removeEmptyGroups();
   }
 });
 
@@ -102,6 +103,7 @@ function registerGroupFromWindow(name, win) {
   var list = [];
   var tabs = win.tabs;
   for (var i=0; i<tabs.length; ++i) {
+    if (tabs[i].url === "chrome://newtab/") continue;
     var tab = {};
     tab.url = tabs[i].url;
     tab.active = tabs[i].active;
@@ -174,6 +176,17 @@ function generateGroupWindow(group) {
       });
     });
   });
+}
+
+/**
+ * 保持しているタブが空のグループを削除する
+ */
+function removeEmptyGroups() {
+  for (var k in groups) if (groups.hasOwnProperty(k)) {
+    if (groups[k].tabs.length === 0) {
+      delete groups[k];
+    }
+  }
 }
 
 });
