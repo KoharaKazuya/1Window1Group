@@ -3,7 +3,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
   var buttonToRegisterGroup = document.querySelector('.register-group');
   buttonToRegisterGroup.addEventListener('click', function(event) {
     var input = buttonToRegisterGroup.querySelector('input');
+    if (event.target === input) return false;
     var name = input.value;
+    if (name.substr(-1) === " ") return false;
     if (name !== undefined && name !== "") {
       chrome.windows.getCurrent(function(win) {
         chrome.runtime.sendMessage({
