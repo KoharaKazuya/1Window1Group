@@ -1,7 +1,9 @@
+/* Background pattern from subtlepatterns.com */
+
 body {
   width: 320px;
   height: 480px;
-  background-color: #effeff;
+  background-image: url("paper.png");
 }
 
 .buttons {
@@ -50,13 +52,15 @@ button label input {
   min-height: 64px;
   cursor: pointer;
   background-color: #eee;
-  transition: background-color 0.2s linear;
+  transition: border 0.2s linear, background-color 0.2s linear;
   margin-top: 1em;
   padding: 1em;
+  border: 1px solid rgba(0, 0, 0, 0);
 }
 
 .group-list .group:hover {
-  background-color: white;
+  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.2);
 }
 
 .group-list .group h2 {

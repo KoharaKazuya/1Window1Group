@@ -3,6 +3,9 @@
   "version": "0.0.0",
   "manifest_version": 2,
   "description": "一つのウィンドウが一つのタブグループとして扱えるように切り替え、保存、復元を簡単にします",
+  "icons": {
+    "48": "icon48.png"
+  },
   "background": {
     "scripts": ["groupmanager.js"]
   },
