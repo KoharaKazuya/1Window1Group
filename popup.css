@@ -11,7 +11,12 @@ body {
   overflow: hidden;
 }
 
-button {
+.buttons:after {
+  content: "";
+  clear: both;
+}
+
+.buttons button {
   border-style: none;
   cursor: pointer;
   background-color: #eee;
@@ -20,19 +25,24 @@ button {
   height: 32px;
   padding: 4px;
   white-space: nowrap;
+  float: right;
 }
 
-button:hover {
+.buttons button:hover {
   background-color: white;
   width: auto;
 }
 
-button .fa {
+.buttons button.remove-group {
+  float: left;
+}
+
+.buttons button .fa {
   font-size: 24px;
   vertical-align: middle;
 }
 
-button label {
+.buttons button label {
   display: inline-block;
   cursor: pointer;
   height: 24px;
@@ -40,7 +50,7 @@ button label {
   margin: 0 1em;
 }
 
-button label input {
+.buttons button label input {
   width: 5em;
 }
 
@@ -53,7 +63,7 @@ button label input {
   cursor: pointer;
   background-color: #eee;
   transition: border 0.2s linear, background-color 0.2s linear;
-  margin-top: 1em;
+  margin: 1em 0;
   padding: 1em;
   border: 1px solid rgba(0, 0, 0, 0);
 }

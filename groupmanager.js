@@ -36,6 +36,12 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   } else if (request.command === "close-group") {
     var name = getGroupFromWindowId(request.windowId);
     if (name !== undefined) {
+      groups[name].info.id = chrome.windows.WINDOW_ID_NONE;
+      chrome.windows.remove(request.windowId);
+    }
+  } else if (request.command === "remove-group") {
+    var name = getGroupFromWindowId(request.windowId);
+    if (name !== undefined) {
       delete groups[name];
     }
   }
@@ -55,10 +61,8 @@ chrome.tabs.onDetached.addListener(updateGroups);
 chrome.tabs.onAttached.addListener(updateGroups);
 chrome.tabs.onReplaced.addListener(updateGroups);
 chrome.tabs.onRemoved.addListener(function(tabId, info) {
-  if (!info.isWindowClosing) {
-    updateGroups();
-    removeEmptyGroups();
-  }
+  updateGroups();
+  removeEmptyGroups();
 });
 
 

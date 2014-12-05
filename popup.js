@@ -38,6 +38,17 @@ document.addEventListener("DOMContentLoaded", function(event) {
     });
   });
 
+  var buttonToRemoveGroup = document.querySelector('.remove-group');
+  buttonToRemoveGroup.addEventListener('click', function(event) {
+    chrome.windows.getCurrent(function(win) {
+      chrome.runtime.sendMessage({
+        "command": "remove-group",
+        "windowId": win.id
+      });
+      window.close();
+    });
+  });
+
   var list = document.querySelector('.group-list');
   chrome.runtime.sendMessage({
     "command": "get-group-names"
