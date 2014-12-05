@@ -41,6 +41,11 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   }
 });
 
+chrome.windows.onCreated.addListener(function(window) {
+  chrome.windows.get(window.id, { "populate": true }, function(win) {
+    bindWindowIdToGroup(win);
+  });
+});
 chrome.windows.onRemoved.addListener(function(windowId) {
   var name = getGroupFromWindowId(windowId);
   if (name !== undefined) {
@@ -185,6 +190,24 @@ function removeEmptyGroups() {
   for (var k in groups) if (groups.hasOwnProperty(k)) {
     if (groups[k].tabs.length === 0) {
       delete groups[k];
+    }
+  }
+}
+
+/**
+ * 既存のウィンドウとグループを対応させる
+ */
+function bindWindowIdToGroup(win) {
+  var group = getGroupFromWindowId(win.id);
+  if (group === undefined) {
+    var tabUrls = [];
+    for (var i=0; i<win.tabs.length; ++i) if (win.tabs[i].url !== "chrome://newtab/") tabUrls.push(win.tabs[i].url);
+    for (var k in groups) if (groups.hasOwnProperty(k)) {
+      var groupUrls = [];
+      for (var i=0; i<groups[k].tabs.length; ++i) if (groups[k].tabs[i].url !== "chrome://newtab/") groupUrls.push(groups[k].tabs[i].url);
+      if (tabUrls.length === groupUrls.length && tabUrls.sort().toString() === groupUrls.sort().toString())
+        groups[k].info.id = win.id;
+        console.log('bind');
     }
   }
 }
