@@ -52,6 +52,9 @@ chrome.windows.onCreated.addListener(function(window) {
     bindWindowIdToGroup(win);
   });
 });
+chrome.windows.onRemoved.addListener(function() {
+  removeEmptyGroups();
+});
 
 // tab hooks
 chrome.tabs.onCreated.addListener(updateGroups);
