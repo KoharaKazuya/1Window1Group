@@ -46,12 +46,6 @@ chrome.windows.onCreated.addListener(function(window) {
     bindWindowIdToGroup(win);
   });
 });
-chrome.windows.onRemoved.addListener(function(windowId) {
-  var name = getGroupFromWindowId(windowId);
-  if (name !== undefined) {
-    groups[name].info.id = chrome.windows.WINDOW_ID_NONE;
-  }
-});
 
 // tab hooks
 chrome.tabs.onCreated.addListener(updateGroups);
@@ -134,16 +128,29 @@ function getGroupFromWindowId(id) {
 }
 
 /**
+ * ウィンドウオブジェクトを取得
+ */
+function getWindow(id, cbSucc, cbFail) {
+  chrome.windows.getAll(function(windows) {
+    for (var i=0; i<windows.length; ++i) {
+      if (windows[i].id === id) {
+        if (cbSucc !== undefined) return cbSucc(windows[i]);
+      }
+    }
+    if (cbFail !== undefined) return cbFail();
+  });
+}
+
+/**
  * グループに対応するウィンドウを選択または生成する
  */
 function openGroup(name) {
   if (name in groups) {
-    var group = groups[name];
-    if (group.info.id !== chrome.windows.WINDOW_ID_NONE) {
-      chrome.windows.update(group.info.id, { "focused": true });
-    } else {
-      generateGroupWindow(group);
-    }
+    getWindow(groups[name].info.id, function(win) {
+      chrome.windows.update(win.id, { "focused": true });
+    }, function() {
+      generateGroupWindow(groups[name]);
+    });
   }
 }
 
@@ -207,7 +214,6 @@ function bindWindowIdToGroup(win) {
       for (var i=0; i<groups[k].tabs.length; ++i) if (groups[k].tabs[i].url !== "chrome://newtab/") groupUrls.push(groups[k].tabs[i].url);
       if (tabUrls.length === groupUrls.length && tabUrls.sort().toString() === groupUrls.sort().toString())
         groups[k].info.id = win.id;
-        console.log('bind');
     }
   }
 }
