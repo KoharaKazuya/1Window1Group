@@ -26,6 +26,7 @@ body {
   padding: 4px;
   white-space: nowrap;
   float: right;
+  overflow: hidden;
 }
 
 .buttons button:hover {
