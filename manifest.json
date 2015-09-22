@@ -1,6 +1,6 @@
 {
   "name": "1Window1Group",
-  "version": "0.0.0",
+  "version": "1.0.1",
   "manifest_version": 2,
   "description": "一つのウィンドウが一つのタブグループとして扱えるように切り替え、保存、復元を簡単にします",
   "icons": {
